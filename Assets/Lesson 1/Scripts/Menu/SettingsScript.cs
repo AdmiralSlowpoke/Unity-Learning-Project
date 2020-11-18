@@ -2,18 +2,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 
 public class SettingsScript : MonoBehaviour
 {
     public Resolution[] resolutions;
     public Text resolutionText;
+    public AudioMixer audioMixer;
+    //
+    public Slider masterVolumeSlider;
+    public Text masterVolumeText;
+    //
     private int resolutionInt=0;
     private void Start()
     {
         resolutionText.text= PlayerPrefs.GetInt("Width").ToString() + "x" + PlayerPrefs.GetInt("Height").ToString();
         resolutionInt = PlayerPrefs.GetInt("ResolutionInt");
         gameObject.SetActive(false);
+        
+    }
+    private void FixedUpdate()
+    {
+        masterVolumeText.text = ((int)masterVolumeSlider.value+80).ToString();
+        audioMixer.SetFloat("MasterVolume", masterVolumeSlider.value);
     }
 
     public void ClickOnResolutionLeft()
